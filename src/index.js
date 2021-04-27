@@ -6,6 +6,6 @@
  */
 "use strict";
 
-import AFB from "./AFB.js";
+import {AFB} from "./AFB.js";
 
-module.exports = AFB;
+export default {AFB};

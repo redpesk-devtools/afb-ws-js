@@ -1,40 +1,33 @@
 /* global __dirname, require, module*/
 
-const webpack = require("webpack");
 const path = require("path");
 const yargs = require("yargs");
 const env = yargs.argv.env; // use --env with webpack 2
 const pkg = require("./package.json");
-const shouldExportToAMD = yargs.argv.amd;
 
-let libraryName = pkg.name;
+let libraryName = pkg.name + '.js';
 
-let outputFile, mode;
-
-if (shouldExportToAMD) {
-  libraryName += ".amd";
-}
-
-if (env === "build") {
+if (env === "prod") {
   mode = "production";
-  outputFile = libraryName + ".min.js";
 } else {
   mode = "development";
-  outputFile = libraryName + ".js";
 }
 
 const config = {
   mode: mode,
-  entry: __dirname + "/src/index.js",
+  entry: [
+    "/src/index.js",
+  ],
   devtool: "source-map",
   output: {
     path: __dirname + "/dist",
-    filename: outputFile,
-    library: libraryName,
-    libraryTarget: shouldExportToAMD ? "amd" : "umd",
-    libraryExport: "default",
-    umdNamedDefine: true,
-    globalObject: "typeof self !== 'undefined' ? self : this",
+    filename: libraryName,
+    library: {
+      type: 'this',
+      export: 'default',
+    },
+    globalObject: "this",
+    clean : true
   },
   module: {
     rules: [
@@ -48,8 +41,8 @@ const config = {
     ],
   },
   resolve: {
-    modules: [path.resolve("./node_modules"), path.resolve("./src")],
-    extensions: [".json", ".js"],
+    modules: [path.resolve("./node_modules"), path.resolve("./dist")],
+    extensions: [".json", ".js", ".ts"],
   },
 };
 

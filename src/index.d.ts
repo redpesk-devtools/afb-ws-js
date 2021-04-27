@@ -11,4 +11,5 @@ export class AFB {
     setURL(location: string, port?: string): void;
 
     call(method: string, request: string, callid?: string): Promise<any>;
+
 }
