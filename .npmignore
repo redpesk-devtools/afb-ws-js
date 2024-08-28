@@ -1,27 +1,12 @@
-
-# source code
-src
-
-# compiler
-tsconfig.json
-webpack.config.js
-
 # files
 *.editorconfig
-.babelrc
-
-# tests
-test
-jest.config.js
-setupJest.ts
-coverage
-
-#  lint
-.eslintrc.js
-.prettierrc
+.gitignore
 
 # IDE - VSCode
 .vscode
 
 # git
 .git
+
+# sample build files
+sample/
