@@ -1,9 +1,9 @@
 {
-  "name": "@redpesk/afb-ws",
-  "version": "1.0.1",
+  "name": "@redpesk/afb-ws-js",
+  "version": "2.0.0",
   "description": "redpesk application framework client library",
-  "main": "src/index.js",
-  "types": "./src/index.d.ts",
+  "exports": "./src/AFB2.js",
+  "types": "./src/AFB2.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,5 +17,10 @@
     "url": "https://bugs.redpesk.bzh/projects/redpesk-os/issues"
   },
   "homepage": "https://docs.redpesk.bzh",
-  "keywords": ["redpesk", "application framework", "websocket", "client"]
+  "keywords": [
+    "redpesk",
+    "application framework",
+    "websocket",
+    "client"
+  ]
 }

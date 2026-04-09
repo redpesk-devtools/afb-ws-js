@@ -1,60 +1,69 @@
-import { AFB, AFBEvent, AFBReply } from '@redpesk/afb-ws';
 
-let afb = new AFB('');
-// open Websocket connection with success and failure callbacks
-let ws = new afb.ws(ws_on_open_cb, ws_on_abort_cb);
+import * as AFB from '@redpesk/afb-ws-js';
 
-// Callback for Websocket connection opening failure
-function ws_on_abort_cb() {
-    console.error('Websocket connection failed');
+var afbws;
+
+AFB.afbWsConnect({
+    onopen: afbws_opened_cb,
+    onabort: afbws_aborted_cb,
+});
+
+
+// Callback for Websocket connection failure
+function afbws_aborted_cb(reason, url) {
+    console.error('Websocket connection to ',url,' failed: ',reason);
+}
+
+// Callback for Websocket connection success
+function afbws_opened_cb(aws) {
+    console.log("Websocket connection succeeded");
+    afbws = aws;
+    demo_helloworld();
 }
 
 // Callback for Websocket connection opening success
-function ws_on_open_cb() {
-    console.log("Websocket connection succeeded");
+function demo_helloworld() {
 
     // Set callback for receiving the timerCount event from the helloworld-event API
-    ws.onevent("helloworld-event/timerCount", ws_on_event_cb);
+    afbws.addEvent("helloworld/verb_called", afbws_event_cb);
 
-    console.log("Call helloworld/testargs");
+    console.log("Call helloworld/hello");
     /* Calling a verb returns a Promise;
        .then() sets the callback for call success,
        .catch() sets the callback for call failure */
     // Call testargs verb from helloworld API with JSON argument
-    ws.call('helloworld/testargs', {'cezam': 'open'})
-        .then(ws_call_success_cb)
-        .catch(ws_call_error_cb);
+    afbws.callPromise('helloworld', 'hello', "Jo")
+        .then(afbws_call_success_cb)
+        .catch(afbws_call_error_cb);
 
     console.log("Call notanapi/notaverb");
     // Call a non-existing API to see what happens when an error occurs
-    ws.call('notanapi/notaverb', null)
-      .then(ws_call_success_cb)
-      .catch(ws_call_error_cb);
+    afbws.callPromise('notanapi', 'notaverb', null)
+      .then(afbws_call_success_cb)
+      .catch(afbws_call_error_cb);
 
-    console.log("Call helloworld/subscribe");
+    console.log("Call helloworld/sum");
     // Call subscribe from helloworld-event API, which will subscribe us to the timerCount event
-    ws.call('helloworld-event/subscribe', null)
-        .then(ws_call_success_cb)
-        .catch(ws_call_error_cb);
+    afbws.callPromise('helloworld', 'sum', [[1, 2, 3, 4]])
+        .then(afbws_call_success_cb)
+        .catch(afbws_call_error_cb);
 
-    console.log("Call helloworld-event/startTimer");
-    // Call startTimer verb from helloworld-event API, which will start sending timerCount events
-    ws.call('helloworld-event/startTimer', null)
-        .then(ws_call_success_cb)
-        .catch(ws_call_error_cb);
 }
 
 // Callback for subscribed event receival
-function ws_on_event_cb(event: AFBEvent) {
-    console.log('Received event: ', event);
+function afbws_event_cb(values, name) {
+    console.log('Received event %s: %o', name, values);
 }
 
 // Callback for verb call success
-function ws_call_success_cb(res: AFBReply) {
-    console.log('Received call reply: ', res);
+function afbws_call_success_cb(rc_values) {
+    let [rc, values] = rc_values;
+    console.log('Call success: %d, %o', rc, values);
 }
 
 // Callback for verb call error
-function ws_call_error_cb(err: AFBReply) {
-    console.error('Call failed: ', err);
+function afbws_call_error_cb(rc_values) {
+    let [rc, values] = rc_values;
+    console.error('Call failed: %d, %o', rc, values);
 }
+

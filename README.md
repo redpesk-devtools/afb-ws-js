@@ -13,10 +13,10 @@ To run it, you must have the `helloworld-binding` compiled somewhere on your
 system, and put its path in `sample/package.json` (replace the two occurrences
 of `/SOMEWHERE/ON/YOUR/COMPUTER/`). Then:
 
-- `cd` in sample
+- `cd sample`
 - `npm install`
-- `npm build`
-- `npm start`
+- `npm run build`
+- `npm run start`
 - go to `http://localhost:1234` in your browser; open the Javascript console and
 see the magic happens 🪄
 

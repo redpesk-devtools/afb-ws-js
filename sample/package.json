@@ -4,11 +4,11 @@
   "scripts": {
     "build": "vite build",
     "debug": "vite build --sourcemap",
-    "start": "afb-binder --binding=/SOMEWHERE/ON/YOUR/COMPUTER/helloworld-binding/build/helloworld-skeleton/afb-helloworld-skeleton.so --binding=/SOMEWHERE/ON/YOUR/COMPUTER/helloworld-binding/build/helloworld-subscribe-event/afb-helloworld-subscribe-event.so --roothttp=./dist/ -vvv"
+    "start": "afb-binder --binding=PATHTO/helloworld-binding.so --roothttp=./dist/ -vvv"
   },
   "license": "Apache-2.0",
   "dependencies": {
-    "@redpesk/afb-ws": "^1.0.1"
+    "@redpesk/afb-ws-js": "file:.."
   },
   "devDependencies": {
     "vite": "^5.4.2"
