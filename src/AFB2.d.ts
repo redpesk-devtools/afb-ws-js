@@ -28,6 +28,8 @@ type AfbWsProtocol = 'rpc' | 'json1';
 
 interface AfbWsConnectParams extends GetURLParams {
     url?: string;
+    session?: string;
+    token?: string;
     onopen(afbws: AfbWs): void;
     onabort?(reason: string, url: string): void;
     expected?: AfbWsProtocol | AfbWsProtocol[];
