@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2015-2024 "IoT.bzh"
+ * Copyright (C) 2015-2026 IoT.bzh Company
  * Author: José Bollo <jose.bollo@iot.bzh>
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
@@ -179,11 +179,11 @@ var AFB = function (base, initialtoken) {
         function close() {
             this.ws.close();
             this.ws.onopen =
-                this.ws.onerror =
-                this.ws.onclose =
-                this.ws.onmessage =
-                this.onopen =
-                this.onabort = function () { };
+            this.ws.onerror =
+            this.ws.onclose =
+            this.ws.onmessage =
+            this.onopen =
+            this.onabort = function(){};
         }
 
         function call(method, request, callid) {
