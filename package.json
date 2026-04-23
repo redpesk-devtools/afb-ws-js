@@ -1,6 +1,6 @@
 {
   "name": "@redpesk/afb-ws-js",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "redpesk application framework client library",
   "exports": "./src/AFB2.js",
   "types": "./src/AFB2.d.ts",
