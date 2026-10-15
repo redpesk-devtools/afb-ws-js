@@ -1,0 +1,5 @@
+version 2.0.2
+-------------
+
+ - fix bug when receiving multiple strings or JSONs (#9515)
+
